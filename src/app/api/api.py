@@ -6,6 +6,8 @@ from picamera.array import PiRGBArray
 from picamera import PiCamera
 from camera import Camera
 from pwm import pwm
+from send import send
+from stop import stop
 
 # camera = PiCamera()
 # rawCapture = PiRGBArray(camera, size=(640, 480))
@@ -22,9 +24,13 @@ def run(second):
 @app.route("/pwm/<dc>/<second>")
 def rotate(dc,second):
     print(dc, second)
-    dc = int(dc)
-    second = int(second)
-    return pwm(dc,second)
+    dc = str(int(dc)*0.4)
+    # second = int(second)
+    return send(dc,second)
+
+@app.route("/stop")
+def halt():
+    return stop()
 
 def gen(camera):
     while True:

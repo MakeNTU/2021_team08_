@@ -11,4 +11,4 @@ def pwm(dc,second):
     p.stop()
     # GPIO.cleanup()
     print(dc)
-    return("pwm")
+    return "pwm"

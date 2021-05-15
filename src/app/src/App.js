@@ -110,16 +110,23 @@ function App() {
     setSubmit(true);
     console.log(parseInt(time));
     console.log(parseInt(pwm))
-    if(state.fire){
-      let route = 'fire/'+time
-      console.log(route);
-      fetch(route);
-    }
-    if(state.spin){
+    if(state.fire && state.spin){
       let route = 'pwm/'+pwm+'/'+time
       console.log(route);
       fetch(route);
     }
+    else if(state.fire && !state.spin){
+      let route = 'fire/'+time
+      console.log(route);
+      fetch(route);
+    }
+    
+  };
+
+  const handleStop = () => {
+    setSubmit(false);
+    setState({fire:false,spin:false})
+    fetch('stop');
     
   };
   
@@ -129,7 +136,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <h2>Marshmallow Roaster</h2>
       </div>
-      <div>
+      {submit==false ? (<div>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <FormControlLabel
@@ -147,6 +154,7 @@ function App() {
         <Grid container spacing={3}>
           <Grid item xs />
           <Grid item xs={4}>
+            <Typography>Rotation Speed</Typography>
             <Slider value={pwm} onChange={handleChangePwm} aria-labelledby="continuous-slider" />
           </Grid>
           <Grid item xs={4}>
@@ -154,10 +162,38 @@ function App() {
           </Grid>
           <Grid item xs />
         </Grid>
-      </div>
-      <div>
         <Button onClick={handleSubmit}>Start roasting!</Button>
+      </div>):(
+        <div>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
+            <FormControlLabel
+              control={<IOSSwitch disabled checked={state.spin} onChange={handleChange} name="spin" />}
+              label="Spinning"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControlLabel
+              control={<IOSSwitch disabled checked={state.fire} onChange={handleChange} name="fire" />}
+              label="Fire"
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={3}>
+          <Grid item xs />
+          <Grid item xs={4}>
+            <Typography>Rotation Speed</Typography>
+            <Slider disabled value={pwm} onChange={handleChangePwm} aria-labelledby="continuous-slider" />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField disabled id="outlined-basic" label="Seconds" variant="outlined" value={time} onChange={handleChangeTime}/>
+          </Grid>
+          <Grid item xs />
+        </Grid>
+        <Button onClick={handleStop} color="secondary">Stop roasting!</Button>
       </div>
+      )}
+      
       <div>
         <Grid container spacing={3}>
           <Grid item xs></Grid>
