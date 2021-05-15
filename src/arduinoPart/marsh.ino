@@ -26,7 +26,7 @@ void loop() {
 
   if (runSpeed != 0 && runTime != 0) {
     recentTime = millis();
-    while (recentTime < timeStamp + runTime) {
+    while (recentTime - timeStamp < runTime) {
       stepper.moveRelativeInSteps(2048); // half round
       recentTime = millis();
     }
@@ -37,6 +37,25 @@ void loop() {
 
   delay(2000);
 }
+
+void recvInfo() {
+  String rc;
+
+  while (Serial.available() > 0) {
+    rc = Serial.readString();
+
+    if (runSpeed == 0) {
+      runSpeed = rc.toInt();
+      stepper.setSpeedInStepsPerSecond(runSpeed * 10);
+      Serial.println(runSpeed);
+    }
+    else {
+      runTime = rc.toInt() * 1000;
+      Serial.println(runTime);
+    }
+  }
+}
+
 /*
 void recvInfo() {
   static byte ndx = 0;
@@ -62,19 +81,3 @@ void recvInfo() {
   }
 }
 */
-
-void recvInfo() {
-  String rc;
-
-  while (Serial.available() > 0) {
-    rc = Serial.readString();
-
-    if (runSpeed == 0) {
-      runSpeed = rc.toInt();
-      stepper.setSpeedInStepsPerSecond(runSpeed * 10);
-    }
-    else {
-      runTime = rc.toInt() * 1000;
-    }
-  }
-}
