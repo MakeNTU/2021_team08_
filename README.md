@@ -12,6 +12,8 @@
 作品用途：使用者可以自行在網頁上設定烤棉花糖的方式，自動烤棉花糖就會烤出 4 顆客製化的美味棉花糖，在烤的同時也可以在網頁上即時看到棉花糖的情況，<br>
 DEMO影片連結：[https://youtu.be/BYy9Rd_AWzQ](https://youtu.be/BYy9Rd_AWzQ) <br>
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/BYy9Rd_AWzQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ### 運作方式
 
 - 將棉花糖串上竹籤，放上支架
